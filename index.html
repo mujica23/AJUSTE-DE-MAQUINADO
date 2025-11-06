@@ -3,167 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ajuste de Maquinado</title>
+  <title>Ajuste de Barra - Taller</title>
   <style>
+    /* 🎨 Estilo moderno */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #0d1b12;
-      color: #e2e8f0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top left, #1c1d1d, #2d2f30, #0a0a0a);
+      color: #e0e0e0;
       margin: 0;
       padding: 0;
-      text-align: center;
-    }
-    header {
-      background-color: #164a26;
-      padding: 20px;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-    main {
-      margin-top: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
-    section {
-      background: #1f3b24;
+
+    h1 {
+      color: #00bfff;
+      text-shadow: 0 0 8px #00bfff94;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #a0a0a0;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: rgba(30, 30, 30, 0.9);
+      border: 1px solid #00bfff;
       border-radius: 15px;
       padding: 25px;
       width: 90%;
-      max-width: 420px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      max-width: 480px;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+      backdrop-filter: blur(10px);
+      margin-top: 15px;
     }
+
     label {
       display: block;
-      margin-top: 10px;
-      font-weight: bold;
-      color: #b9f6ca;
+      margin: 12px 0 5px;
+      color: #00bfff;
+      font-weight: 500;
     }
-    input, select, button {
-      margin: 5px 0;
-      padding: 10px;
-      width: 95%;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 1em;
-    }
+
     input, select {
-      background-color: #e2e8f0;
-      color: #000;
-    }
-    button {
-      background-color: #2e7d32;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #00bfff;
+      background-color: #1c1c1c;
       color: #fff;
-      font-weight: bold;
-      cursor: pointer;
+      font-size: 15px;
       transition: 0.2s;
     }
-    button:hover {
-      background-color: #43a047;
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 8px #00bfff;
     }
-    #resultado {
+
+    button {
+      background: linear-gradient(90deg, #0077ff, #066585);
+      border: none;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
       margin-top: 20px;
-      background: #17361e;
-      border-radius: 12px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0099ff93, #33ccff);
+      box-shadow: 0 0 15px #00bfff;
+    }
+
+    .resultado {
+      background: rgba(0, 0, 0, 0.7);
+      border-left: 3px solid #00bfff;
+      border-radius: 8px;
       padding: 15px;
+      margin-top: 25px;
       text-align: left;
-      color: #e0ffe3;
-      font-size: 0.95em;
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+      color: #e0e0e0;
+      font-size: 15px;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #ccc;
+      text-align: center;
+    }
+
+    footer span {
+      color: #00bfff;
     }
   </style>
 </head>
 <body>
-  <header>⚙️ AJUSTE DE MAQUINADO</header>
 
-  <main>
-    <section>
-      <label for="modelo">Selecciona el modelo de caja:</label>
-      <select id="modelo" onchange="mostrarFormulario()">
-        <option value="">-- Elegir modelo --</option>
-        <option value="modelo1">Modelo HP</option>
-        <option value="modelo2">Modelo OilSand</option>
-      </select>
+  <h1> Ajuste de Barra </h1>
+  <h2>Seleccione el modelo de caja</h2>
 
-      <div id="formularioModelo"></div>
-    </section>
-  </main>
+  <div class="card">
+    <label for="modelo">Modelo:</label>
+    <select id="modelo" onchange="mostrarFormulario()">
+      <option value="modelo1">Modelo HP</option>
+      <option value="modelo2">Modelo OilSand</option>
+    </select>
+  </div>
+
+  <!-- FORMULARIO MODELO 1 -->
+  <div class="card" id="form_modelo1">
+    <label>Diámetro virgen (mm)</label>
+    <input type="number" id="diametro_virgen" value="133">
+
+    <label>Distancia brackets lado derecho (mm)</label>
+    <input type="number" id="dist_der" value="3087.86">
+
+    <label>Distancia brackets lado izquierdo (mm)</label>
+    <input type="number" id="dist_izq" value="3088.59">
+
+    <label>Informativo lado derecho (mm)</label>
+    <input type="number" id="info_der" value="7.42">
+
+    <label>Informativo lado izquierdo (mm)</label>
+    <input type="number" id="info_izq" value="7.42">
+
+    <button onclick="calcularAjuste()">Calcular ajuste</button>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <!-- FORMULARIO MODELO 2 -->
+  <div class="card" id="form_modelo2" style="display:none;">
+    <label>Diámetro virgen (mm)</label>
+    <input type="number" id="diametro_virgen2" value="140">
+
+    <label>Distancia entre soportes (mm)</label>
+    <input type="number" id="distancia_soportes" value="3100">
+
+    <label>Compensación adicional (mm)</label>
+    <input type="number" id="compensacion" value="2.5">
+
+    <button onclick="calcularAvanzado()">Calcular ajuste </button>
+
+    <div class="resultado" id="resultado2"></div>
+  </div>
+
+  <footer>Hecho por <span>Miguel Mujica</span> ⚙️ | 2025</footer>
 
   <script>
     function mostrarFormulario() {
       const modelo = document.getElementById("modelo").value;
-      const contenedor = document.getElementById("formularioModelo");
-
-      if (modelo === "modelo1") {
-        contenedor.innerHTML = `
-          <h3>📏 Modelo 1: Caja 4 orificios en línea</h3>
-          <label>Diámetro virgen:</label>
-          <input type="number" id="diametro" value="133"><br>
-          <label>Distancia brackets lado derecho:</label>
-          <input type="number" id="distDer" value="3087.86"><br>
-          <label>Distancia brackets lado izquierdo:</label>
-          <input type="number" id="distIzq" value="3088.59"><br>
-          <label>Informativo derecho:</label>
-          <input type="number" id="infoDer" value="7.42"><br>
-          <label>Informativo izquierdo:</label>
-          <input type="number" id="infoIzq" value="7.42"><br>
-          <button onclick="calcularModelo1()">Calcular ajuste</button>
-          <div id="resultado"></div>
-        `;
-      } else if (modelo === "modelo2") {
-        contenedor.innerHTML = `
-          <h3>📐 Modelo 2: Caja doble desplazada</h3>
-          <label>Medida base:</label>
-          <input type="number" id="base" value="100"><br>
-          <label>Desplazamiento:</label>
-          <input type="number" id="desv" value="5"><br>
-          <button onclick="calcularModelo2()">Calcular ajuste</button>
-          <div id="resultado"></div>
-        `;
-      } else {
-        contenedor.innerHTML = "";
-      }
+      document.getElementById("form_modelo1").style.display = modelo === "modelo1" ? "block" : "none";
+      document.getElementById("form_modelo2").style.display = modelo === "modelo2" ? "block" : "none";
     }
 
-    function calcularModelo1() {
-      const diametro = parseFloat(document.getElementById("diametro").value);
-      const distDer = parseFloat(document.getElementById("distDer").value);
-      const distIzq = parseFloat(document.getElementById("distIzq").value);
-      const infoDer = parseFloat(document.getElementById("infoDer").value);
-      const infoIzq = parseFloat(document.getElementById("infoIzq").value);
+    // --- Modelo 1 ---
+    function calcularAjuste() {
+      const diametro_virgen = parseFloat(document.getElementById("diametro_virgen").value);
+      const dist_der = parseFloat(document.getElementById("dist_der").value);
+      const dist_izq = parseFloat(document.getElementById("dist_izq").value);
+      const info_der = parseFloat(document.getElementById("info_der").value);
+      const info_izq = parseFloat(document.getElementById("info_izq").value);
 
-      const medidaBarra = 50;
+      const medida_barra = 50;
       const nominal = 3090;
-      const desvDer = distDer - nominal;
-      const desvIzq = distIzq - nominal;
 
-      const frenteDer = (diametro - medidaBarra)/2 + infoDer + desvDer;
-      const atrasDer = (diametro - medidaBarra)/2 - infoDer - desvDer;
-      const frenteIzq = (diametro - medidaBarra)/2 - infoIzq + desvIzq;
-      const atrasIzq = (diametro - medidaBarra)/2 + infoIzq - desvIzq;
+      const desv_der = dist_der - nominal;
+      const desv_izq = dist_izq - nominal;
 
-      document.getElementById("resultado").innerHTML = `
-        <h4>📊 Resultados modelo 1:</h4>
-        <p><b>Desviación derecha:</b> ${desvDer.toFixed(2)} mm</p>
-        <p><b>Desviación izquierda:</b> ${desvIzq.toFixed(2)} mm</p>
-        <p><b>Lado derecho → Frente:</b> ${frenteDer.toFixed(2)} mm | <b>Atrás:</b> ${atrasDer.toFixed(2)} mm</p>
-        <p><b>Lado izquierdo → Frente:</b> ${frenteIzq.toFixed(2)} mm | <b>Atrás:</b> ${atrasIzq.toFixed(2)} mm</p>
+      const base = (diametro_virgen - medida_barra) / 2;
+      const frente_der = base + info_der + desv_der;
+      const atras_der = base - info_der - desv_der;
+      const frente_izq = base - info_izq + desv_izq;
+      const atras_izq = base + info_izq - desv_izq;
+
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.innerHTML = `
+        <h3> Resultados - Modelo  HP</h3>
+        <p><strong>Desviación lado derecho:</strong> ${desv_der.toFixed(2)} mm</p>
+        <p><strong>Desviación lado izquierdo:</strong> ${desv_izq.toFixed(2)} mm</p>
+        <hr>
+        <p><strong>Lado derecho → Frente:</strong> ${frente_der.toFixed(2)} mm | <strong>Atrás:</strong> ${atras_der.toFixed(2)} mm</p>
+        <p><strong>Lado izquierdo → Frente:</strong> ${frente_izq.toFixed(2)} mm | <strong>Atrás:</strong> ${atras_izq.toFixed(2)} mm</p>
       `;
     }
 
-    function calcularModelo2() {
-      const base = parseFloat(document.getElementById("base").value);
-      const desv = parseFloat(document.getElementById("desv").value);
-      const resultado = base + desv;
-      document.getElementById("resultado").innerHTML = `
-        <h4>📏 Resultado modelo 2:</h4>
-        <p>Medida final ajustada: ${resultado.toFixed(2)} mm</p>
+    // --- Modelo 2 ---
+    function calcularAvanzado() {
+      const diametro_virgen = parseFloat(document.getElementById("diametro_virgen2").value);
+      const distancia = parseFloat(document.getElementById("distancia_soportes").value);
+      const compensacion = parseFloat(document.getElementById("compensacion").value);
+
+      const nominal = 3090;
+      const medida_barra = 50;
+      const desviacion = distancia - nominal;
+      const base = (diametro_virgen - medida_barra) / 2;
+
+      const frente = base + compensacion + desviacion / 2;
+      const atras = base - compensacion - desviacion / 2;
+
+      const resultadoDiv = document.getElementById("resultado2");
+      resultadoDiv.innerHTML = `
+        <h3> Resultados - Modelo OilSand</h3>
+        <p><strong>Desviación total:</strong> ${desviacion.toFixed(2)} mm</p>
+        <hr>
+        <p><strong>Ajuste frente:</strong> ${frente.toFixed(2)} mm | <strong>Ajuste atrás:</strong> ${atras.toFixed(2)} mm</p>
       `;
     }
   </script>
+
 </body>
 </html>
-

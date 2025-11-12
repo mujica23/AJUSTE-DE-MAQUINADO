@@ -116,11 +116,11 @@
     <label for="modelo">Modelo:</label>
     <select id="modelo" onchange="mostrarFormulario()">
       <option value="modelo1">Modelo HP</option>
-      <option value="modelo2">Modelo OilSand</option>
+      <option value="modelo2">Modelo EX</option>
     </select>
   </div>
 
-  <!-- FORMULARIO MODELO 1 -->
+  <!-- FORMULARIO MODELO HP -->
   <div class="card" id="form_modelo1">
     <label>Diámetro virgen (mm)</label>
     <input type="number" id="diametro_virgen" value="133">
@@ -137,24 +137,28 @@
     <label>Informativo lado izquierdo (mm)</label>
     <input type="number" id="info_izq" value="7.42">
 
-    <button onclick="calcularAjuste()">Calcular ajuste</button>
-
-    <div class="resultado" id="resultado"></div>
+    <button onclick="calcularHP()">Calcular ajuste</button>
+    <div class="resultado" id="resultado1"></div>
   </div>
 
-  <!-- FORMULARIO MODELO 2 -->
+  <!-- FORMULARIO MODELO EX -->
   <div class="card" id="form_modelo2" style="display:none;">
     <label>Diámetro virgen (mm)</label>
-    <input type="number" id="diametro_virgen2" value="140">
+    <input type="number" id="diametro_virgen2" value="133">
 
-    <label>Distancia entre soportes (mm)</label>
-    <input type="number" id="distancia_soportes" value="3100">
+    <label>Diámetro exterior lado derecho (mm)</label>
+    <input type="number" id="diam_externo_der" value="3085.50">
 
-    <label>Compensación adicional (mm)</label>
-    <input type="number" id="compensacion" value="2.5">
+    <label>Diámetro exterior lado izquierdo (mm)</label>
+    <input type="number" id="diam_externo_izq" value="3086.00">
 
-    <button onclick="calcularAvanzado()">Calcular ajuste </button>
+    <label>Informativo lado derecho (mm)</label>
+    <input type="number" id="info_der2" value="7.42">
 
+    <label>Informativo lado izquierdo (mm)</label>
+    <input type="number" id="info_izq2" value="7.42">
+
+    <button onclick="calcularEX()">Calcular ajuste</button>
     <div class="resultado" id="resultado2"></div>
   </div>
 
@@ -167,8 +171,8 @@
       document.getElementById("form_modelo2").style.display = modelo === "modelo2" ? "block" : "none";
     }
 
-    // --- Modelo 1 ---
-    function calcularAjuste() {
+    // --- Modelo HP ---
+    function calcularHP() {
       const diametro_virgen = parseFloat(document.getElementById("diametro_virgen").value);
       const dist_der = parseFloat(document.getElementById("dist_der").value);
       const dist_izq = parseFloat(document.getElementById("dist_izq").value);
@@ -187,9 +191,8 @@
       const frente_izq = base - info_izq + desv_izq;
       const atras_izq = base + info_izq - desv_izq;
 
-      const resultadoDiv = document.getElementById("resultado");
-      resultadoDiv.innerHTML = `
-        <h3> Resultados - Modelo  HP</h3>
+      document.getElementById("resultado1").innerHTML = `
+        <h3>Resultados - Modelo HP</h3>
         <p><strong>Desviación lado derecho:</strong> ${desv_der.toFixed(2)} mm</p>
         <p><strong>Desviación lado izquierdo:</strong> ${desv_izq.toFixed(2)} mm</p>
         <hr>
@@ -198,26 +201,33 @@
       `;
     }
 
-    // --- Modelo 2 ---
-    function calcularAvanzado() {
+    // --- Modelo EX ---
+    function calcularEX() {
       const diametro_virgen = parseFloat(document.getElementById("diametro_virgen2").value);
-      const distancia = parseFloat(document.getElementById("distancia_soportes").value);
-      const compensacion = parseFloat(document.getElementById("compensacion").value);
+      const diam_externo_der = parseFloat(document.getElementById("diam_externo_der").value);
+      const diam_externo_izq = parseFloat(document.getElementById("diam_externo_izq").value);
+      const info_der = parseFloat(document.getElementById("info_der2").value);
+      const info_izq = parseFloat(document.getElementById("info_izq2").value);
 
-      const nominal = 3090;
       const medida_barra = 50;
-      const desviacion = distancia - nominal;
+      const nominal = 3090;
+
+      const desv_der = diam_externo_der - nominal;
+      const desv_izq = diam_externo_izq - nominal;
+
       const base = (diametro_virgen - medida_barra) / 2;
+      const frente_der = base + info_der + desv_der;
+      const atras_der = base - info_der - desv_der;
+      const frente_izq = base - info_izq + desv_izq;
+      const atras_izq = base + info_izq - desv_izq;
 
-      const frente = base + compensacion + desviacion / 2;
-      const atras = base - compensacion - desviacion / 2;
-
-      const resultadoDiv = document.getElementById("resultado2");
-      resultadoDiv.innerHTML = `
-        <h3> Resultados - Modelo OilSand</h3>
-        <p><strong>Desviación total:</strong> ${desviacion.toFixed(2)} mm</p>
+      document.getElementById("resultado2").innerHTML = `
+        <h3>Resultados - Modelo EX</h3>
+        <p><strong>Desviación lado derecho:</strong> ${desv_der.toFixed(2)} mm</p>
+        <p><strong>Desviación lado izquierdo:</strong> ${desv_izq.toFixed(2)} mm</p>
         <hr>
-        <p><strong>Ajuste frente:</strong> ${frente.toFixed(2)} mm | <strong>Ajuste atrás:</strong> ${atras.toFixed(2)} mm</p>
+        <p><strong>Lado derecho → Frente:</strong> ${frente_der.toFixed(2)} mm | <strong>Atrás:</strong> ${atras_der.toFixed(2)} mm</p>
+        <p><strong>Lado izquierdo → Frente:</strong> ${frente_izq.toFixed(2)} mm | <strong>Atrás:</strong> ${atras_izq.toFixed(2)} mm</p>
       `;
     }
   </script>
